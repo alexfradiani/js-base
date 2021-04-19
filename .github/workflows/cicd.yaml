@@ -1,0 +1,24 @@
+name: lint-and-test-and-coverage-report
+on: [push, pull_request]
+jobs:
+  lint-and-test-and-coverage-report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: read .nvmrc
+        run: echo ::set-output name=NVMRC::$(cat .nvmrc)
+        id: nvm
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '${{ steps.nvm.outputs.NVMRC }}'
+      - run: yarn --frozen-lockfile
+      - run: yarn lint
+      - name: Add database url
+      - run: echo MONGODB_URI=${{ secrets.MONGODB_URI }} >> .env.ci
+      - name: Test & publish code coverage
+        uses: paambaati/codeclimate-action@v2.5.7
+        env:
+          CC_TEST_REPORTER_ID: 4f52ef201ba2120b426db97340e0ee58e7579fb08c9b2185d52beee12d844853
+        with:
+          coverageCommand: yarn test:coverage
+          debug: true
