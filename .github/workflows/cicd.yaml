@@ -13,12 +13,11 @@ jobs:
           node-version: '${{ steps.nvm.outputs.NVMRC }}'
       - run: yarn --frozen-lockfile
       - run: yarn lint
-      - name: Add database url
-      - run: echo MONGODB_URI=${{ secrets.MONGODB_URI }} >> .env.ci
       - name: Test & publish code coverage
         uses: paambaati/codeclimate-action@v2.5.7
         env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
           CC_TEST_REPORTER_ID: 4f52ef201ba2120b426db97340e0ee58e7579fb08c9b2185d52beee12d844853
         with:
-          coverageCommand: yarn test:coverage
+          coverageCommand: yarn test:ci
           debug: true

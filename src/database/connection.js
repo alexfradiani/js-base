@@ -11,6 +11,7 @@ const connection = {
     });
     mongoose.connection.on('error', (err) => {
       console.log(`error connecting to DB: ${err}`);
+      process.exit(1); // app can't go on
     });
     mongoose.connection.once('open', () => {
       console.log('mongodb connected');
