@@ -1,3 +1,6 @@
+if (!process.env.ENV) {
+  process.env.ENV = 'dev';
+}
 require('dotenv').config({ path: `.env.${process.env.ENV || 'dev'}` });
 console.log(`environment is set to: ${process.env.ENV}`);
 

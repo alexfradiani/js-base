@@ -59,4 +59,4 @@ const DuplicatedEmail = 'DuplicatedEmail';
 const InvalidCredentials = 'InvalidCredentials';
 const ValidationError = 'ValidationError'; // other mongoose errors
 
-module.exports = AuthController;
+module.exports = new AuthController();

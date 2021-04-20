@@ -6,7 +6,7 @@
       "type": "node",
       "request": "launch",
       "skipFiles": ["<node_internals>/**"],
-      "program": "${workspaceFolder}/server.js"
+      "program": "${workspaceFolder}/src/server.js"
     },
     {
       "name": "Debug Tests",

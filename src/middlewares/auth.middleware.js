@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const { JWT_SECRET, ACCESS_TOKEN_LIFE } = require('../config/globals');
 
 class AuthMiddleware {
-  static async check(req, _res, next) {
+  async check(req, _res, next) {
     let token = req.header('authorization');
 
     if (!token) {
@@ -11,8 +11,9 @@ class AuthMiddleware {
     }
 
     try {
-      const payload = await AuthMiddleware.verifyJWT(token);
+      const payload = await this.verifyJWT(token);
       if (payload !== null) {
+        req.session = payload;
         return next(); // there is a valid user
       }
     } catch (error) {
@@ -20,11 +21,11 @@ class AuthMiddleware {
     }
   }
 
-  static async createJWT(user) {
+  async createJWT(user) {
     return new Promise((resolve, reject) => {
       try {
         const token = jwt.sign(
-          { data: { userId: user._id, email: user.email } },
+          { userId: user._id, email: user.email },
           JWT_SECRET,
           { expiresIn: ACCESS_TOKEN_LIFE }
         );
@@ -36,7 +37,7 @@ class AuthMiddleware {
     });
   }
 
-  static verifyJWT(token) {
+  async verifyJWT(token) {
     return new Promise((resolve, reject) => {
       try {
         const verify = jwt.verify(token, JWT_SECRET || '');
@@ -48,4 +49,4 @@ class AuthMiddleware {
   }
 }
 
-module.exports = AuthMiddleware;
+module.exports = new AuthMiddleware();

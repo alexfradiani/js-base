@@ -1,19 +1,20 @@
 const express = require('express');
 const auth = require('../middlewares/auth.middleware');
+const User = require('../database/entities/user.entity');
 
 class UsersController {
-  static routes() {
+  routes() {
     const router = express.Router();
 
-    router.get('/profile', auth.check, this.profile);
+    router.get('/profile', auth.check.bind(auth), this.profile.bind(this));
 
     return router;
   }
 
-  static profile(req, res) {
-    console.log('profile was called...');
-    res.send('WIP');
+  async profile(req, res) {
+    const user = await User.findOne({ id: req.session.userId });
+    res.send({ user });
   }
 }
 
-module.exports = UsersController;
+module.exports = new UsersController();

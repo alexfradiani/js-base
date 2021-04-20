@@ -1,8 +1,8 @@
 const express = require('express');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
-const UsersController = require('./controllers/users.controller');
-const AuthController = require('./controllers/auth.controller');
+const usersCtrl = require('./controllers/users.controller');
+const authCtrl = require('./controllers/auth.controller');
 const { ErrorMiddleware } = require('./middlewares/error.middleware');
 const {
   RATE_LIMIT_MAX_REQUESTS,
@@ -25,9 +25,7 @@ app.use(
   })
 );
 
-app.use('/users', UsersController.routes());
-
-const authCtrl = new AuthController();
+app.use('/users', usersCtrl.routes());
 app.use('/auth', authCtrl.routes());
 
 // generic error middleware handler
