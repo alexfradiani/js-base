@@ -1,5 +1,5 @@
 name: lint-and-test-and-coverage-report
-on: [push, pull_request]
+on: [pull_request]
 jobs:
   lint-and-test-and-coverage-report:
     runs-on: ubuntu-latest
