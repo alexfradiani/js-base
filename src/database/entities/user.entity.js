@@ -1,10 +1,6 @@
 const mongoose = require('mongoose');
 const { hashSync, genSaltSync } = require('bcrypt');
 
-/**
- * @class User
- * @property password
- */
 const schema = new mongoose.Schema(
   {
     firstname: String,
