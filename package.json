@@ -10,8 +10,8 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
-    "test": "ENV=test jest --verbose",
-    "test:ci": "ENV=ci jest --verbose --coverage",
+    "test": "ENV=test jest --verbose --runInBand",
+    "test:ci": "ENV=ci jest --verbose --coverage --runInBand",
     "lint": "yarn run eslint src/**/*.js"
   },
   "devDependencies": {

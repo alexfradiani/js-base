@@ -27,11 +27,11 @@ class AuthController {
 
   signupErrors(err, next) {
     if (err.code === 11000 && err.keyValue.email) {
-      return next(new ApiError(400, DuplicatedEmail));
+      return next(new ApiError(400, Errors.DuplicatedEmail));
     }
 
     if (err.name === 'ValidationError') {
-      return next(new ApiError(400, ValidationError));
+      return next(new ApiError(400, Errors.ValidationError));
     }
 
     next(err); // any other error
@@ -50,13 +50,15 @@ class AuthController {
       console.log(`error signin in user: ${e}`);
     }
 
-    next(new ApiError(401, InvalidCredentials));
+    next(new ApiError(401, Errors.InvalidCredentials));
   }
 }
 
 // possible errors from this controller:
-const DuplicatedEmail = 'DuplicatedEmail';
-const InvalidCredentials = 'InvalidCredentials';
-const ValidationError = 'ValidationError'; // other mongoose errors
+const Errors = {
+  DuplicatedEmail: 'DuplicatedEmail',
+  InvalidCredentials: 'InvalidCredentials',
+  ValidationError: 'ValidationError' // other mongoose errors
+};
 
-module.exports = new AuthController();
+module.exports = { AuthController, Errors };
