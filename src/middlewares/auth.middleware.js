@@ -21,19 +21,9 @@ class AuthMiddleware {
     }
   }
 
-  async createJWT(user) {
-    return new Promise((resolve, reject) => {
-      try {
-        const token = jwt.sign(
-          { userId: user._id, email: user.email },
-          JWT_SECRET,
-          { expiresIn: ACCESS_TOKEN_LIFE }
-        );
-        resolve(token);
-      } catch (error) {
-        console.log(error);
-        reject();
-      }
+  createJWT(user) {
+    return jwt.sign({ userId: user._id, email: user.email }, JWT_SECRET, {
+      expiresIn: ACCESS_TOKEN_LIFE
     });
   }
 

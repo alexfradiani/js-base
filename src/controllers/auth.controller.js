@@ -38,16 +38,12 @@ class AuthController {
   }
 
   async signin(req, res, next) {
-    try {
-      const { email, password } = req.body.user;
-      const user = await User.findOne({ email }).select('+password').exec();
-      const match = user && compareSync(password, user.password);
-      if (match) {
-        const token = await auth.createJWT(user);
-        return res.send({ token });
-      }
-    } catch (e) {
-      console.log(`error signin in user: ${e}`);
+    const { email, password } = req.body.user;
+    const user = await User.findOne({ email }).select('+password').exec();
+    const match = user && compareSync(password, user.password);
+    if (match) {
+      const token = auth.createJWT(user);
+      return res.send({ token });
     }
 
     next(new ApiError(401, Errors.InvalidCredentials));
