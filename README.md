@@ -2,4 +2,4 @@
 
 # Vanilla JS API Base: Node.js + Express + MongoDB
 
-Originally inspired by [Rootstrap Node-Typescript API Base](https://duckduckgo.com)
+Originally inspired by [Rootstrap Node-Typescript API Base](https://github.com/rootstrap/node-ts-api-base/)

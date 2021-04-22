@@ -19,6 +19,8 @@ class AuthController {
     try {
       user = new User(req.body.user);
       await user.save();
+      user = user.toObject();
+      delete user.password;
       res.send(user);
     } catch (err) {
       this.signupErrors(err, next);
